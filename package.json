@@ -1,0 +1,23 @@
+{
+  "name": "hazardgrid",
+  "version": "1.0.0",
+  "description": "Grid layout app for Hazard studies",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kendallcorner/HazardGrid.git"
+  },
+  "author": "Kendall Werts",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kendallcorner/HazardGrid/issues"
+  },
+  "homepage": "https://github.com/kendallcorner/HazardGrid#readme",
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "gulp": "^4.0.2"
+  }
+}
