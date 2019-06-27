@@ -37,35 +37,16 @@ app.controller('MainCtrl', ['$scope', '$http', '$interval', 'uiGridGroupingConst
       median: {label: 'median: ', aggregationFn: stats.aggregator.accumulate.numValue, finalizerFn: stats.finalizer.median }
     },
     columnDefs: [
-      { name: 'name', width: '15%' },
-      { name: 'gender', grouping: { groupPriority: 1 }, sort: { priority: 1, direction: 'asc' }, editableCellTemplate: 'ui-grid/dropdownEditor', width: '10%',
-        cellFilter: 'mapGender', editDropdownValueLabel: 'gender', editDropdownOptionsArray: [
-          { id: 1, gender: 'male' },
-          { id: 2, gender: 'female' }
+      { name: 'cause', width: '15%' },
+      { name: 'deviation', grouping: { groupPriority: 1 }, sort: { priority: 1, direction: 'asc' }, editableCellTemplate: 'ui-grid/dropdownEditor', width: '10%',
+        cellFilter: 'mapGender', editDropdownValueLabel: 'deviation', editDropdownOptionsArray: [
+          { id: 1, deviation: 'male' },
+          { id: 2, deviation: 'female' }
         ] 
       },
-      { field: 'age', treeAggregationType: uiGridGroupingConstants.aggregation.MAX, width: '10%' },
-      { field: 'age', displayName: 'Age (common)', customTreeAggregationFn: stats.aggregator.mode, width: '10%' },
+      { field: 'consequence', treeAggregationType: uiGridGroupingConstants.aggregation.MAX, width: '10%' },
       { name: 'company', width: '15%' },
-      { name: 'state', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'desc' }, width: '25%', cellTemplate: '<div><div ng-if="!col.grouping || col.grouping.groupPriority === undefined || col.grouping.groupPriority === null || ( row.groupHeader && col.grouping.groupPriority === row.treeLevel )" class="ui-grid-cell-contents" title="TOOLTIP">{{COL_FIELD CUSTOM_FILTERS}}</div></div>' },
-      { field: 'balance', displayName: 'balance (avg)', width: '15%', cellFilter: 'currency', footerCellFilter: 'currency',
-        treeAggregationType: uiGridGroupingConstants.aggregation.AVG,
-        customTreeAggregationFinalizerFn: function( aggregation ) {
-          aggregation.rendered = aggregation.value;
-        }
-      },
-      { field: 'balance', displayName: 'balance (total)', width: '15%', cellFilter: 'currency', footerCellFilter: 'currency',
-        treeAggregationType: uiGridGroupingConstants.aggregation.SUM,
-        customTreeAggregationFinalizerFn: function( aggregation ) {
-          aggregation.rendered = aggregation.value;
-        }
-      },
-      { field: 'balance', displayName: 'balance (median)', width: '15%', cellFilter: 'currency', footerCellFilter: 'currency',
-        treeAggregationType: 'median',
-      },
-      { field: 'balance', displayName: 'balance (std dev)', width: '15%', cellFilter: 'currency', footerCellFilter: 'currency',
-        treeAggregationType: 'stdev',
-      }
+      { name: 'node', grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'desc' }, width: '25%'},
     ],
     onRegisterApi: function( gridApi ) {
       $scope.gridApi = gridApi;
@@ -103,13 +84,13 @@ app.controller('MainCtrl', ['$scope', '$http', '$interval', 'uiGridGroupingConst
     }
   };
 
-  $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json')
+  $http.get('http://ryskconsulting.com/500_complex.json')
   .then(function(response) {
     var data = response.data;
 
     for ( var i = 0; i < data.length; i++ ){
-      data[i].state = data[i].address.state;
-      data[i].gender = data[i].gender === 'male' ? 1: 2;
+      data[i].node = data[i].address.node;
+      data[i].deviation = data[i].deviation === 'male' ? 1: 2;
       data[i].balance = Number( data[i].balance.slice(1).replace(/,/,'') );
     }
     delete data[2].age;
